@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>QR-Scanner — SafeHeim</title>
+<meta name="theme-color" content="#0b0f14">
+<base href="/safe-heim-/">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; media-src 'self' blob:; frame-ancestors 'none'">
+<meta http-equiv="Permissions-Policy" content="camera=(self)">
+<link rel="stylesheet" href="assets/app.css">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="/safe-heim-/apple-touch-icon.png">
+</head>
+<body>
+<div class="container">
+<header class="header">
+<a class="brand" href="./"><img src="assets/logo.svg" alt=""><strong data-i18n="brand">SafeHeim</strong></a>
+<div class="buttons"><a class="btn" href="help.html" data-i18n="nav.help">Hilfe</a></div>
+</header>
+
+<div class="video-wrap"><video id="v" playsinline></video><div class="scan-line"></div></div>
+<input id="file-fallback" class="hidden" type="file" accept="image/*">
+<div class="note small" style="margin-top:12px" data-i18n="qr.tip">Tipp: Tippe auf das Kamerabild, um die Taschenlampe zu togglen (falls verfügbar).</div>
+
+<footer><a href="impressum.html" data-i18n="nav.imprint">Impressum</a></footer>
+</div>
+
+<script defer src="assets/qr/qr.js"></script>
+<script>startQR(document.getElementById('v'), url => { if(confirm(`Gefundene URL öffnen?\n\n${url}`)){ location.href = url; } }).catch?.(()=>alert('Kamera nicht verfügbar.'));</script>
+</body>
+</html>

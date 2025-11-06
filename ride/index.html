@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Einrichten — SafeHeim</title>
+<meta name="theme-color" content="#0b0f14">
+<base href="/safe-heim-/">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://api.qrserver.com; connect-src 'self'; frame-ancestors 'none'">
+<link rel="stylesheet" href="../assets/app.css">
+<script type="module" src="../assets/app.js"></script>
+</head>
+<body>
+<div id="live" class="sr-only" aria-live="polite"></div>
+<div class="container">
+<header class="header">
+<a class="brand" href="../"><img src="../assets/logo.svg" alt=""><strong data-i18n="brand">SafeHeim</strong></a>
+<div class="buttons">
+<a class="btn" href="../arrived.html" data-i18n="nav.arrived">Check-in</a>
+<a class="btn" href="../panic.html" data-i18n="nav.panic">SOS</a>
+<a class="btn" href="../print/" target="_blank" rel="noopener" data-i18n="nav.print">Drucken</a>
+</div>
+</header>
+
+<div class="grid">
+<div class="card">
+<h3 data-i18n="setup.h3a">Kontakte &amp; Check-in</h3>
+<div class="section">
+<label class="small" data-i18n="setup.name">Dein Name</label>
+<input id="ownerName" class="btn" placeholder="z. B. Jan">
+</div>
+
+<div class="section">
+<div class="buttons"><button class="btn" data-act="addContact" data-i18n="setup.addContact">Kontakt hinzufügen</button></div>
+<div id="contact-list"></div>
+</div>
+
+<hr class="sep">
+
+<div class="section">
+<label class="small" data-i18n="setup.timer">Check-in Timer (Minuten)</label>
+<input id="checkinMinutes" class="btn" type="number" min="5" step="5" value="15">
+<div class="buttons"><button class="btn" id="startIcs" data-i18n="setup.ics">Kalender-Erinnerung (.ics)</button></div>
+</div>
+</div>
+
+<div class="card">
+<h3 data-i18n="setup.h3b">Teilen, QR &amp; Orte</h3>
+<div class="section">
+<label class="small" data-i18n="setup.link">Dein Check-in-Link</label>
+<input id="shareLink" class="btn" readonly>
+<div class="buttons">
+<button class="btn" data-act="copyShare" data-i18n="setup.copy">Link kopieren</button>
+<a class="btn" id="waShare" target="_blank" rel="noopener" data-i18n="setup.whatsapp">WhatsApp</a>
+<a class="btn" id="qrOpen" target="_blank" rel="noopener" data-i18n="setup.qr">QR anzeigen (extern)</a>
+</div>
+<p class="small" data-i18n="setup.qrNote">QR über externen Dienst (api.qrserver.com). Alternativ Link teilen/kopieren.</p>
+</div>
+
+<hr class="sep">
+
+<div class="section">
+<h3 data-i18n="setup.places">Trusted Places</h3>
+<p class="small" data-i18n="setup.placesInfo">Füge Orte (z. B. Zuhause, Uni) hinzu. Beim Check-in siehst du, ob du in der Nähe bist.</p>
+<div class="buttons"><button class="btn" data-act="addPlaceFromGPS" data-i18n="setup.placeAdd">Aktuellen Ort speichern</button></div>
+<div id="place-list"></div>
+</div>
+
+<hr class="sep">
+
+<div class="section">
+<h3 data-i18n="setup.stealth">Stealth-Modus</h3>
+<p class="small" data-i18n="setup.stealthInfo">Unauffällige UI (z. B. „Notiz senden“ statt „SOS“).</p>
+<div class="buttons">
+<button class="btn" data-act="toggleStealth" data-i18n="setup.stealthToggle">Stealth umschalten</button>
+<span id="stealthState" class="small">Inaktiv</span>
+</div>
+</div>
+
+<hr class="sep">
+
+<div class="section">
+<div class="buttons">
+<button class="btn" id="exportSettings" data-i18n="setup.export">Einstellungen exportieren</button>
+<label class="btn" data-i18n="setup.import">Importieren<input id="importSettings" type="file" accept="application/json" style="display:none"></label>
+</div>
+</div>
+</div>
+</div>
+
+<footer class="small" data-i18n="setup.branding">Partner-Branding: URL-Parameter <code>?brand=NAME&amp;primary=#HEX&amp;accent=#HEX&amp;logo=URL&amp;lang=en</code></footer>
+</div>
+
+<script type="module">
+import {composeMessage, getLocationOnce, settingsSnapshot, setSettings, announce, i18nApply} from '../assets/app.js';
+const abs = p => new URL(p, location.origin + '/safe-heim-/').href;
+
+function updateShare(){
+const link = abs('arrived.html');
+const inp = document.getElementById('shareLink'); inp.value = link;
+const msg = composeMessage('arrived');
+document.getElementById('waShare').href = 'https://wa.me/?text=' + encodeURIComponent(msg + '\n' + link);
+document.getElementById('qrOpen').href = 'https://api.qrserver.com/v1/create-qr-code/?size=360x360&data=' + encodeURIComponent(link);
+}
+
+document.getElementById('startIcs').onclick = ()=>{
+const mins = parseInt(document.getElementById('checkinMinutes').value,10) || 15;
+const t = new Date(Date.now() + mins*60000);
+const pad = n => String(n).padStart(2,'0');
+const toUtc = d => d.getUTCFullYear()+pad(d.getUTCMonth()+1)+pad(d.getUTCDate())+'T'+pad(d.getUTCHours())+pad(d.getUTCMinutes())+'00Z';
+const start = toUtc(t), end = toUtc(new Date(t.getTime()+30*60000));
+const ics = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//SafeHeim//DE
+BEGIN:VEVENT
+UID:${Date.now()}@safeheim
+DTSTAMP:${start}
+DTSTART:${start}
+DTEND:${end}
+SUMMARY:Check-in fällig – SafeHeim
+DESCRIPTION:Erinnere dich an den Check-in. Link: ${abs('arrived.html')}
+END:VEVENT
+END:VCALENDAR`;
+const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'})); a.download='safeheim-checkin.ics'; a.click();
+};
+
+function renderPlaces(){
+const s = settingsSnapshot();
+const list = document.getElementById('place-list');
+list.innerHTML = (s.trustedPlaces||[]).map((p,i)=>`
+<div class="card" style="margin:8px 0; display:flex; justify-content:space-between; align-items:center; gap:10px">
+<div><div><b>${p.label}</b></div><div class="small">${p.lat.toFixed(5)}, ${p.lon.toFixed(5)} • ${p.radius} m</div></div>
+<button class="btn danger-outline" data-act="delPlace" data-idx="${i}">Löschen</button>
+</div>`).join('') || '<p class="small">Noch keine Orte gespeichert.</p>';
+document.getElementById('stealthState').textContent = s.stealth ? 'Aktiv' : 'Inaktiv';
+}
+
+document.addEventListener('click', async e=>{
+const el=e.target.closest('[data-act]'); if(!el) return;
+const act=el.getAttribute('data-act');
+
+if(act==='addPlaceFromGPS'){
+try{
+const pos = await getLocationOnce();
+const label = prompt('Name für diesen Ort? (z. B. Zuhause)'); if(!label) return;
+const radius = parseInt(prompt('Radius in Metern (z. B. 150)?')||'150',10);
+const s=settingsSnapshot(); s.trustedPlaces = s.trustedPlaces||[];
+s.trustedPlaces.push({label, lat:pos.lat, lon:pos.lon, radius:isFinite(radius)?radius:150});
+setSettings(s); renderPlaces(); announce('Ort gespeichert');
+}catch(_){ alert('Standort nicht verfügbar.'); }
+}
+if(act==='delPlace'){ const idx=+el.getAttribute('data-idx'); const s=settingsSnapshot(); s.trustedPlaces.splice(idx,1); setSettings(s); renderPlaces(); announce('Ort gelöscht'); }
+if(act==='toggleStealth'){ const s=settingsSnapshot(); s.stealth=!s.stealth; setSettings(s); renderPlaces(); announce('Stealth geändert'); }
+});
+
+document.getElementById('exportSettings').onclick = ()=>{
+const s = settingsSnapshot();
+const a = document.createElement('a');
+a.href = URL.createObjectURL(new Blob([JSON.stringify(s,null,2)],{type:'application/json'}));
+a.download = 'safeheim-settings.json'; a.click();
+};
+document.getElementById('importSettings').onchange = async (e)=>{
+const file=e.target.files[0]; if(!file) return;
+try{ const json = JSON.parse(await file.text()); setSettings(json); renderPlaces(); announce('Import erfolgreich'); location.reload(); }
+catch(_){ alert('Import fehlgeschlagen.'); }
+};
+
+document.addEventListener('DOMContentLoaded', ()=>{ i18nApply(); updateShare(); renderPlaces(); });
+</script>
+</body>
+</html>

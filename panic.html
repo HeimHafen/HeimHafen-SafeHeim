@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SOS / Panik — SafeHeim</title>
+<meta name="theme-color" content="#0b0f14">
+<base href="/safe-heim-/">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'">
+<meta http-equiv="Permissions-Policy" content="geolocation=(self)">
+<link rel="stylesheet" href="assets/app.css">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="/safe-heim-/apple-touch-icon.png">
+<script type="module">
+import {getLocationOnce, composeMessage, waLink, smsLink, announce, isStealthMode, i18nApply} from './assets/app.js';
+async function boot(){
+i18nApply();
+try { await getLocationOnce(); }
+catch(e){
+const hint=document.createElement('p'); hint.className='small'; hint.style.color='#ffb4c2';
+hint.textContent = e?.code===1?'Standort abgelehnt. Nachricht kann ohne Standort gesendet werden.'
+: e?.code===2?'Standort vorübergehend nicht verfügbar.' : 'Standort konnte nicht ermittelt werden.';
+document.querySelector('.card').appendChild(hint);
+}
+
+const h3=document.querySelector('h3'); const call=document.getElementById('call112');
+if(isStealthMode()){ h3.textContent='Notiz senden'; call.style.display='none'; }
+
+const msg = composeMessage('panic');
+document.getElementById('msg').textContent = msg;
+
+const st = JSON.parse(localStorage.getItem('sh.settings')||'{}');
+const contacts = st.contacts||[];
+document.getElementById('targets').innerHTML = contacts.length ? contacts.map(c=>`
+<div class="buttons" style="margin-bottom:6px">
+<a class="btn danger-outline" target="_blank" href="${waLink(c.tel, msg)}">WhatsApp ${c.label}</a>
+<a class="btn danger-outline" href="${smsLink(c.tel, msg)}">SMS</a>
+</div>`).join('') : '<p class="small">Noch keine Kontakte gespeichert.</p>';
+
+const share = document.getElementById('shareAny');
+if(navigator.share){ share.onclick=()=>navigator.share({text:msg}).catch(()=>{}); }
+else { share.onclick=async()=>{ await navigator.clipboard?.writeText(msg); share.textContent='Kopiert ✓'; announce('In Zwischenablage kopiert'); setTimeout(()=>share.textContent='Teilen / Kopieren',1200); }; }
+}
+document.addEventListener('DOMContentLoaded', boot);
+</script>
+</head>
+<body>
+<div id="live" class="sr-only" aria-live="polite"></div>
+<div class="container">
+<header class="header"><a class="brand" href="./"><img src="assets/logo.svg" alt=""><strong data-i18n="brand">SafeHeim</strong></a></header>
+
+<div class="card" style="border:1px solid #a33">
+<h3 data-i18n="panic.h3">🚨 SOS / Panik</h3>
+<p id="msg" class="small"></p>
+<div class="buttons">
+<button class="btn primary" id="shareAny" data-i18n="panic.share">Teilen / Kopieren</button>
+<a class="btn" id="call112" href="tel:112" data-i18n="panic.call">112 anrufen</a>
+</div>
+</div>
+
+<div class="card"><h3 data-i18n="panic.direct">Direkt an Kontakte</h3><div id="targets"></div></div>
+</div>
+</body>
+</html>

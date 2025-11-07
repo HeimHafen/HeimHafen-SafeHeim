@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Einrichten — SafeHeim</title>
 <meta name="theme-color" content="#0b0f14">
-<base href="/safe-heim-/">
+<base href="/HeimHafen-SafeHeim/">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://api.qrserver.com; connect-src 'self'; frame-ancestors 'none'">
 <link rel="stylesheet" href="../assets/app.css">
 <script type="module" src="../assets/app.js"></script>
@@ -93,7 +93,7 @@
 
 <script type="module">
 import {composeMessage, getLocationOnce, settingsSnapshot, setSettings, announce, i18nApply} from '../assets/app.js';
-const abs = p => new URL(p, location.origin + '/safe-heim-/').href;
+const abs = p => new URL(p, location.origin + '/HeimHafen-SafeHeim/').href;
 
 function updateShare(){
 const link = abs('arrived.html');
@@ -146,11 +146,11 @@ const label = prompt('Name für diesen Ort? (z. B. Zuhause)'); if(!label) return
 const radius = parseInt(prompt('Radius in Metern (z. B. 150)?')||'150',10);
 const s=settingsSnapshot(); s.trustedPlaces = s.trustedPlaces||[];
 s.trustedPlaces.push({label, lat:pos.lat, lon:pos.lon, radius:isFinite(radius)?radius:150});
-setSettings(s); renderPlaces(); announce('Ort gespeichert');
+setSettings(s); renderPlaces();
 }catch(_){ alert('Standort nicht verfügbar.'); }
 }
-if(act==='delPlace'){ const idx=+el.getAttribute('data-idx'); const s=settingsSnapshot(); s.trustedPlaces.splice(idx,1); setSettings(s); renderPlaces(); announce('Ort gelöscht'); }
-if(act==='toggleStealth'){ const s=settingsSnapshot(); s.stealth=!s.stealth; setSettings(s); renderPlaces(); announce('Stealth geändert'); }
+if(act==='delPlace'){ const idx=+el.getAttribute('data-idx'); const s=settingsSnapshot(); s.trustedPlaces.splice(idx,1); setSettings(s); renderPlaces(); }
+if(act==='toggleStealth'){ const s=settingsSnapshot(); s.stealth=!s.stealth; setSettings(s); renderPlaces(); }
 });
 
 document.getElementById('exportSettings').onclick = ()=>{
@@ -161,7 +161,7 @@ a.download = 'safeheim-settings.json'; a.click();
 };
 document.getElementById('importSettings').onchange = async (e)=>{
 const file=e.target.files[0]; if(!file) return;
-try{ const json = JSON.parse(await file.text()); setSettings(json); renderPlaces(); announce('Import erfolgreich'); location.reload(); }
+try{ const json = JSON.parse(await file.text()); setSettings(json); renderPlaces(); location.reload(); }
 catch(_){ alert('Import fehlgeschlagen.'); }
 };
 

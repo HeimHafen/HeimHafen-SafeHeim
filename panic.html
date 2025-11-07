@@ -1,7 +1,27 @@
-<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SOS / Panik</title><link rel="stylesheet" href="./assets/app.css">
-<div class="container">
-  <h1>🚨 SOS</h1>
-  <p>Bleib ruhig. Wenn möglich, rufe <a href="tel:112">112</a> an.</p>
-  <p><a href="./">Zurück</a></p>
-</div>
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>SOS – SafeHeim</title>
+  <meta name="theme-color" content="#0b0f14">
+  <base href="/HeimHafen-SafeHeim/">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="assets/app.css">
+  <script defer src="assets/app.js"></script>
+</head>
+<body>
+  <div id="live" class="sr-only" aria-live="polite"></div>
+  <main class="page">
+    <h1>🚨 SOS</h1>
+    <p>Bleib ruhig. Wenn möglich, **rufe sofort <a href="tel:112">112</a> an**.</p>
+    <div class="buttons">
+      <a class="btn danger" href="tel:112">112 anrufen</a>
+      <button class="btn primary" onclick="SafeHeim.shareSituation('sos')">Standort teilen</button>
+      <a class="btn" href="https://maps.apple.com/?q=Polizei" target="_blank" rel="noopener">Polizei in der Nähe</a>
+      <a class="btn" href="./">Zurück</a>
+    </div>
+    <p class="muted" style="margin-top:12px">SafeHeim ersetzt nicht den Notruf 112.</p>
+  </main>
+</body>
+</html>

@@ -3,64 +3,66 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Drucken — SafeHeim</title>
-<base href="/safe-heim-/">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https://api.qrserver.com; style-src 'self' 'unsafe-inline'">
+<title>SafeHeim — One-Pager</title>
+<base href="/HeimHafen-SafeHeim/">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'">
 <link rel="stylesheet" href="../assets/app.css">
 <style>
-@media print { .no-print{display:none} .sheet{page-break-after:always} }
-.sheet{background:#fff;color:#000;padding:24px;border-radius:12px}
-.poster h1{font-size:38px;margin:8px 0;color:#000}
-.poster p{color:#333}
-.qr{display:flex;gap:16px;align-items:center}
-.qr img{width:180px;height:180px;border:1px solid #ddd;border-radius:8px}
-.sticker{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.sticker .item{border:1px dashed #888;padding:10px;border-radius:8px;background:#fff;color:#000}
-.brandbar{height:6px;background:linear-gradient(90deg,var(--brand),var(--brand-2));border-radius:4px;margin:8px 0}
+.wrap{background:#fff;color:#111;padding:28px;border-radius:12px}
+.wrap h1{color:#000}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0}
+.kpis .card{background:#fafafa;border:1px solid #eee;color:#111}
+@media print{ .no-print{display:none} body{background:#fff} .container{max-width:900px} }
 </style>
 </head>
 <body>
 <div class="container">
-<header class="header no-print">
+<div class="no-print" style="display:flex;justify-content:space-between;align-items:center;margin:8px 0">
 <a class="brand" href="../"><img src="../assets/logo.svg" alt=""><strong>SafeHeim</strong></a>
 <div class="buttons"><button class="btn" onclick="window.print()">Drucken</button></div>
-</header>
+</div>
+<div class="wrap">
+<h1>SafeHeim — Sicher ankommen in <span id="city">unserer Stadt</span></h1>
+<p><b>Was ist SafeHeim?</b> Eine ultraschlanke Web-App für 1-Tap-Check-ins („Ich bin gut angekommen“) und SOS-Hinweise — ohne Konto, ohne Cloud, 100 % privat & DSGVO-freundlich.</p>
 
-<div class="sheet poster">
-<div class="brandbar"></div>
-<h1>SafeHeim — Sicher ankommen</h1>
-<p>Scanne den QR und speichere dir den Check-in-Link auf dem Handy. 1-Tap „Ich bin gut angekommen“ & „SOS“ – 100 % privat, keine Registrierung.</p>
-<div class="qr">
-<img id="qrPoster" alt="QR" src="">
-<div>
-<div><b>Dein Link:</b></div>
-<div id="linkTxt" style="word-break:break-all"></div>
-</div>
-</div>
+<div class="kpis">
+<div class="card"><h3>0 € Infrastruktur</h3><p>Keine Server nötig. Läuft als Progressive Web App (PWA) direkt im Browser.</p></div>
+<div class="card"><h3>30 Sek. Onboarding</h3><p>Link öffnen → „Zum Home-Bildschirm“ → fertig. iOS & Android.</p></div>
+<div class="card"><h3>Privacy-by-Design</h3><p>Keine Registrierung, Daten bleiben lokal. Teilen nur an Vertrauenspersonen.</p></div>
 </div>
 
-<div class="sheet">
-<h3>Sticker (3×2)</h3>
-<div class="sticker" id="stickers"></div>
-</div>
-</div>
+<h3>Warum für die Stadt?</h3>
+<ul class="list">
+<li>Spürbarer Sicherheitsgewinn für Heimwege, Schulwege, Freizeit.</li>
+<li>Keine Datenhaltung durch die Kommune, minimales Risiko.</li>
+<li>Einfaches City-Branding (Farben/Logo/Name per URL-Parameter).</li>
+<li>Multiplikatoren: Schulen, Vereine, Taxi/ÖPNV, Gastronomie.</li>
+</ul>
 
+<h3>Geplanter Pilottest (6 Wochen)</h3>
+<ol class="list">
+<li>Partner gewinnen (Schulen, Uni, Jugend, Taxi, Clubs).</li>
+<li>Kommunikation: Sticker/Poster (QR), Social Posts, Website.</li>
+<li>Begleitende Evaluation: Nutzung, Feedback, Verbesserung.</li>
+</ol>
+
+<h3>Datenschutz kompakt</h3>
+<p>Kein Konto, keine Cloud. Einstellungen lokal (LocalStorage). Standort wird nur auf Wunsch abgefragt. Inhalte werden nur durch Nutzer*innen selbst geteilt (SMS/WhatsApp).</p>
+
+<h3>Call to Action</h3>
+<p><b>Vorschlag:</b> Start als städtische Aktion „Sicher Heim“ zum <span id="date">N.N.</span>. Bereitstellung der QR-Poster/Sticker für Institutionen. Presseankündigung & Social Media. Ansprechpartner*in: <span id="contact">N.N.</span>.</p>
+
+<div class="buttons no-print" style="margin-top:10px">
+<a class="btn" href="../print/" target="_blank" rel="noopener">Poster/Sticker öffnen</a>
+<a class="btn" href="../" target="_blank" rel="noopener">App öffnen</a>
+</div>
+</div>
+</div>
 <script>
-function abs(p){ return new URL(p, location.origin + '/safe-heim-/').href; }
-const link = abs('arrived.html');
-const src = 'https://api.qrserver.com/v1/create-qr-code/?size=360x360&data=' + encodeURIComponent(link);
-document.getElementById('qrPoster').src = src;
-document.getElementById('linkTxt').textContent = link;
-
-const wrap = document.getElementById('stickers');
-for(let i=0;i<6;i++){
-const div = document.createElement('div');
-div.className='item';
-div.innerHTML = `<div style="font-weight:700">SafeHeim</div>
-<img src="${src}" alt="QR" style="width:120px;height:120px;border:1px solid #ddd;border-radius:6px">
-<div style="font-size:12px;word-break:break-all">${link}</div>`;
-wrap.appendChild(div);
-}
+const q = new URLSearchParams(location.search);
+if(q.get('city')) document.getElementById('city').textContent = q.get('city');
+if(q.get('date')) document.getElementById('date').textContent = q.get('date');
+if(q.get('contact'))document.getElementById('contact').textContent = q.get('contact');
 </script>
 </body>
 </html>

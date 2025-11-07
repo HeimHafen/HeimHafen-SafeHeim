@@ -1,68 +1,81 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>SafeHeim / SafeFahrt — Sicher ankommen</title>
-<meta name="description" content="1-Tap Check-in & SOS ohne Konto. 100 % privat, offlinefähig, QR-Scanner, Trusted Places & Kalender-Erinnerung.">
-<meta name="theme-color" content="#0b0f14">
-<link rel="canonical" href="https://heimhafen.github.io/HeimHafen-SafeHeim/">
-<base href="/HeimHafen-SafeHeim/">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>SafeHeim / SafeFahrt — Sicher ankommen</title>
+  <meta name="description" content="1-Tap Check-in & SOS ohne Konto. 100 % privat, offlinefähig, QR-Scanner, Trusted Places & Kalender-Erinnerung.">
+  <meta name="theme-color" content="#0b0f14">
 
-<!-- Security / Privacy -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://api.qrserver.com https://maps.google.com; connect-src 'self'; media-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
-<meta http-equiv="Permissions-Policy" content="geolocation=(self), camera=(self), microphone=(), interest-cohort=()">
-<meta name="referrer" content="no-referrer">
+  <!-- SEO / Canonical -->
+  <link rel="canonical" href="https://heimhafen.github.io/HeimHafen-SafeHeim/">
 
-<!-- PWA / Icons -->
-<link rel="manifest" href="assets/manifest.webmanifest">
-<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
-<link rel="icon" sizes="192x192" href="assets/icon-shield-192.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="SafeHeim">
-<link rel="apple-touch-icon" href="/HeimHafen-SafeHeim/apple-touch-icon.png">
+  <!-- PWA / Icons -->
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="./assets/logo.svg">
+  <link rel="icon" sizes="192x192" href="./assets/icon-shield-192.png">
 
-<!-- Social -->
-<meta property="og:title" content="SafeHeim — Sicher ankommen">
-<meta property="og:description" content="Check-in & SOS per 1-Tap. Keine Cloud, 100 % privat.">
-<meta property="og:image" content="assets/icon-shield-512.png">
-<meta name="twitter:card" content="summary_large_image">
+  <!-- iOS (nutzt NICHT das Manifest) -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="SafeHeim">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/icon-shield-180.png">
 
-<link rel="stylesheet" href="assets/app.css">
-<script type="module" src="assets/app.js"></script>
+  <!-- Security / Privacy -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://api.qrserver.com https://maps.google.com; connect-src 'self'; media-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+  <meta http-equiv="Permissions-Policy" content="geolocation=(self), camera=(self), microphone=(), interest-cohort=()">
+  <meta name="referrer" content="no-referrer">
+
+  <!-- Social -->
+  <meta property="og:title" content="SafeHeim — Sicher ankommen">
+  <meta property="og:description" content="Check-in & SOS per 1-Tap. Keine Cloud, 100 % privat.">
+  <meta property="og:image" content="https://heimhafen.github.io/HeimHafen-SafeHeim/assets/icon-shield-512.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="stylesheet" href="./assets/app.css">
+  <!-- Keine Inline-Scripts wegen CSP -->
+  <script type="module" src="./assets/app.js" defer></script>
+  <!-- SW-Registrierung als externe Datei (CSP-konform) -->
+  <script src="./assets/pwa.js" defer></script>
 </head>
 <body>
-<div id="live" class="sr-only" aria-live="polite"></div>
-<div class="container">
-<header class="header">
-<a class="brand" href="./">
-<img src="assets/logo.svg" alt="">
-<strong id="brand" data-i18n="brand">SafeHeim</strong>
-<span id="cidBadge" class="badge" style="display:none;margin-left:8px"></span>
-</a>
-<div class="buttons">
-<a class="btn ghost" href="help.html" data-i18n="nav.help">Hilfe</a>
-<a class="btn" href="datenschutz.html" data-i18n="nav.privacy">Datenschutz</a>
-<a class="btn" href="ride/" data-i18n="nav.setup">Jetzt einrichten</a>
-</div>
-</header>
+  <div id="live" class="sr-only" aria-live="polite"></div>
+  <div class="container">
+    <header class="header">
+      <a class="brand" href="./">
+        <img src="./assets/logo.svg" alt="SafeHeim Logo">
+        <strong id="brand" data-i18n="brand">SafeHeim</strong>
+        <span id="cidBadge" class="badge" style="display:none;margin-left:8px"></span>
+      </a>
+      <div class="buttons">
+        <a class="btn ghost" href="./help.html" data-i18n="nav.help">Hilfe</a>
+        <a class="btn" href="./datenschutz.html" data-i18n="nav.privacy">Datenschutz</a>
+        <a class="btn" href="./ride/" data-i18n="nav.setup">Jetzt einrichten</a>
+      </div>
+    </header>
 
-<div class="hero">
-<div>
-<span class="badge" data-i18n="home.badge">Sicher ankommen — für dich &amp; deine Liebsten</span>
-<h1 data-i18n="home.h1">Dein smarter Sicherheits-Link</h1>
-<p class="lead" data-i18n="home.lead">1-Tap „Ich bin gut angekommen“ &amp; „SOS“ inkl. Standortlink. Keine Cloud. Keine Registrierung. Offline nutzbar. Trusted Places & Kalender-Erinnerung.</p>
-<div class="buttons">
-<a class="btn primary" href="arrived.html" data-i18n="home.cta.arrived">Ich bin gut angekommen</a>
-<a class="btn" href="panic.html" data-i18n="home.cta.panic">SOS / Panik</a>
-<a class="btn" href="qr-scan.html" data-i18n="home.cta.qr">QR scannen</a>
-<a class="btn" href="ride/" data-i18n="home.cta.setup">Einrichten</a>
-</div>
-</div>
-</div>
+    <div class="hero">
+      <div>
+        <span class="badge" data-i18n="home.badge">Sicher ankommen — für dich &amp; deine Liebsten</span>
+        <h1 data-i18n="home.h1">Dein smarter Sicherheits-Link</h1>
+        <p class="lead" data-i18n="home.lead">
+          1-Tap „Ich bin gut angekommen“ &amp; „SOS“ inkl. Standortlink. Keine Cloud. Keine Registrierung.
+          Offline nutzbar. Trusted Places &amp; Kalender-Erinnerung.
+        </p>
+        <div class="buttons">
+          <a class="btn primary" href="./arrived.html" data-i18n="home.cta.arrived">Ich bin gut angekommen</a>
+          <a class="btn" href="./panic.html" data-i18n="home.cta.panic">SOS / Panik</a>
+          <a class="btn" href="./qr-scan.html" data-i18n="home.cta.qr">QR scannen</a>
+          <a class="btn" href="./ride/" data-i18n="home.cta.setup">Einrichten</a>
+        </div>
+      </div>
+    </div>
 
-<footer><a href="impressum.html" data-i18n="nav.imprint">Impressum</a> · <a href="docs/onepager.html" target="_blank" rel="noopener" data-i18n="nav.onepager">One-Pager</a></footer>
-</div>
+    <footer>
+      <a href="./impressum.html" data-i18n="nav.imprint">Impressum</a> ·
+      <a href="./docs/onepager.html" target="_blank" rel="noopener" data-i18n="nav.onepager">One-Pager</a>
+    </footer>
+  </div>
 </body>
 </html>

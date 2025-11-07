@@ -1,6 +1,6 @@
 // Service Worker – Pro (sofort aktiv, Offline-Fallback, Navigation Preload)
-const CACHE = 'safeheim-v18'; // <— bei jeder Änderung erhöhen
-const ROOT = '/safe-heim-/';
+const CACHE = 'safeheim-v19'; // <— bei jeder Änderung erhöhen
+const ROOT = '/HeimHafen-SafeHeim/';
 const OFFLINE_FALLBACK = ROOT + 'offline.html';
 
 const ASSETS = [

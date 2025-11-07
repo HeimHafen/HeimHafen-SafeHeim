@@ -1,48 +1,59 @@
-// /service-worker.js
-const CACHE = 'sh-v1';
-const ASSETS = [
-'./', './index.html',
-'./assets/app.css', './assets/app.js',
-'./assets/logo.svg',
-'./assets/icon-shield-180.png',
-'./assets/icon-shield-192.png',
-'./assets/icon-shield-512.png',
-'./arrived.html', './panic.html', './qr-scan.html', './ride/'
+/* SafeHeim Service Worker – Offline + Update UX */
+const CACHE = 'sh-v3';
+const PRECACHE = [
+  './', './index.html', './offline.html',
+  './assets/app.css', './assets/app.js', './assets/pwa.js', './assets/logo.svg',
+  './assets/icon-shield-180.png', './assets/icon-shield-192.png', './assets/icon-shield-512.png',
+  './arrived.html', './panic.html', './qr-scan.html', './ride/', './assets/qr.js'
 ];
 
-self.addEventListener('install', e => {
-e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
-self.skipWaiting();
+// Instant install + pre-cache
+self.addEventListener('install', (e) => {
+  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(PRECACHE)));
+  self.skipWaiting();
 });
 
-self.addEventListener('activate', e => {
-e.waitUntil(
-caches.keys().then(keys =>
-Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-)
-);
-self.clients.claim();
+// Claim immediately & delete old caches
+self.addEventListener('activate', (e) => {
+  e.waitUntil(
+    caches.keys().then((keys) => Promise.all(keys.map((k) => (k !== CACHE ? caches.delete(k) : undefined))))
+  );
+  self.clients.claim();
 });
 
-// HTML: network-first, Assets: cache-first
-self.addEventListener('fetch', e => {
-const req = e.request;
-const isHTML = req.headers.get('accept')?.includes('text/html');
-if (isHTML) {
-e.respondWith(
-fetch(req).then(r => {
-const clone = r.clone();
-caches.open(CACHE).then(c => c.put(req, clone));
-return r;
-}).catch(() => caches.match(req).then(r => r || caches.match('./index.html')))
-);
-} else {
-e.respondWith(
-caches.match(req).then(r => r || fetch(req).then(r2 => {
-const clone = r2.clone();
-caches.open(CACHE).then(c => c.put(req, clone));
-return r2;
-}))
-);
-}
+// Allow page to trigger skipWaiting()
+self.addEventListener('message', (e) => {
+  if (e.data?.type === 'SKIP_WAITING') self.skipWaiting();
+});
+
+// Strategy: HTML = network-first (+offline fallback), assets = cache-first (+runtime cache)
+self.addEventListener('fetch', (e) => {
+  const req = e.request;
+  const acceptsHTML = req.headers.get('accept')?.includes('text/html');
+
+  if (req.method !== 'GET' || new URL(req.url).origin !== self.location.origin) return;
+
+  if (acceptsHTML) {
+    e.respondWith(
+      fetch(req)
+        .then((res) => {
+          const copy = res.clone();
+          caches.open(CACHE).then((c) => c.put(req, copy));
+          return res;
+        })
+        .catch(() => caches.match(req).then((r) => r || caches.match('./offline.html')))
+    );
+  } else {
+    e.respondWith(
+      caches.match(req).then(
+        (hit) =>
+          hit ||
+          fetch(req).then((res) => {
+            const copy = res.clone();
+            caches.open(CACHE).then((c) => c.put(req, copy));
+            return res;
+          })
+      )
+    );
+  }
 });

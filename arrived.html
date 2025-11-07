@@ -1,7 +1,35 @@
-<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ich bin gut angekommen</title><link rel="stylesheet" href="./assets/app.css">
-<div class="container">
-  <h1>✅ Ich bin gut angekommen</h1>
-  <p>Sende diese Seite als Bestätigung an deine Kontakte.</p>
-  <p><a href="./">Zurück</a></p>
-</div>
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Ich bin gut angekommen – SafeHeim</title>
+  <meta name="theme-color" content="#0b0f14">
+  <base href="/HeimHafen-SafeHeim/">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="assets/app.css">
+  <script defer src="assets/app.js"></script>
+</head>
+<body>
+  <div id="live" class="sr-only" aria-live="polite"></div>
+  <main class="page">
+    <h1>✅ Ich bin gut angekommen</h1>
+    <p>Sende diese Bestätigung (inkl. Standortlink) an deine Kontakte.</p>
+    <div class="buttons">
+      <button class="btn primary" onclick="SafeHeim.shareSituation('ok')">Teilen</button>
+      <a class="btn" href="./">Zurück</a>
+    </div>
+
+    <!-- Fallback Share Sheet (wird per JS ein-/ausgeblendet) -->
+    <div id="fallback" style="display:none;margin-top:16px">
+      <div class="buttons">
+        <a id="fallback-whatsapp" class="btn" href="#" target="_blank" rel="noopener">WhatsApp</a>
+        <a id="fallback-sms" class="btn" href="#">Nachricht (SMS)</a>
+        <a id="fallback-mail" class="btn" href="#">E-Mail</a>
+        <button id="fallback-copy" class="btn">Link kopieren</button>
+      </div>
+      <p class="muted">Standort wird – wenn möglich – als Kartenlink mitgesendet.</p>
+    </div>
+  </main>
+</body>
+</html>

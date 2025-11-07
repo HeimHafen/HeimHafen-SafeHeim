@@ -101,14 +101,25 @@ body{
   border-color:var(--accent2);
 }
 
-/* Badge */
+/* Badge (gleichmäßige Mehrzeilen-Zentrierung) */
 .badge{
-  display:inline-block;
-  padding:6px 10px;
-  border-radius:999px;
+  display:inline-flex;                 /* vertikal + horizontal zentrieren */
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+
+  padding:12px 16px;                   /* mehr vertikaler Raum */
+  min-height:50px;                     /* wirkt bei 2 Zeilen ausgeglichen */
+  line-height:1.25;                    /* harmonische Zeilenhöhe */
+  max-width:100%;
+  border-radius:9999px;
+
   background:linear-gradient(90deg,var(--accent),var(--accent2));
   color:#06202b;
   font-weight:600;
+
+  text-wrap:balance;                   /* schönere Umbrüche (Safari/Chrome) */
+  white-space:normal;                  /* Umbruch erlauben */
 }
 
 /* Hero / Typography */
@@ -136,4 +147,9 @@ a:hover{opacity:.9}
 /* NoScript Hinweis */
 .noscript{
   background:#7c2d12;color:#fff;padding:8px 12px;border-radius:8px;margin:8px 0
+}
+
+/* Tiny screens */
+@media (max-width:360px){
+  .badge{ padding:10px 14px; min-height:46px; }
 }

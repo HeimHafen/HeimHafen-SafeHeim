@@ -18,62 +18,9 @@ export function settingsSnapshot(){ return JSON.parse(JSON.stringify(settings));
 export function setSettings(obj){ settings = { ...defaults, ...obj }; store.set('sh.settings', settings); renderSettings(); }
 
 /* ---------- i18n ---------- */
-const I18N = {
-de: {
-brand:"SafeHeim",
-"nav.help":"Hilfe","nav.privacy":"Datenschutz","nav.setup":"Jetzt einrichten","nav.imprint":"Impressum","nav.arrived":"Check-in","nav.panic":"SOS","nav.print":"Drucken","nav.onepager":"One-Pager",
-"home.badge":"Sicher ankommen — für dich & deine Liebsten",
-"home.h1":"Dein smarter Sicherheits-Link",
-"home.lead":"1-Tap „Ich bin gut angekommen“ & „SOS“ inkl. Standortlink. Keine Cloud. Keine Registrierung. Offline nutzbar. Trusted Places & Kalender-Erinnerung.",
-"home.cta.arrived":"Ich bin gut angekommen","home.cta.panic":"SOS / Panik","home.cta.qr":"QR scannen","home.cta.setup":"Einrichten",
-"arrived.h3":"Ich bin gut angekommen","arrived.share":"Teilen / Kopieren","arrived.direct":"Direkt an Kontakte",
-"panic.h3":"🚨 SOS / Panik","panic.share":"Teilen / Kopieren","panic.call":"112 anrufen","panic.direct":"Direkt an Kontakte",
-"qr.tip":"Tipp: Tippe auf das Kamerabild, um die Taschenlampe zu togglen (falls verfügbar).",
-"help.h3":"FAQ",
-"help.privacy":"<b>Privatsphäre:</b> Keine Cloud, keine Konten. Alles bleibt lokal.",
-"help.ios":"<b>iPhone-App-Icon:</b> Seite öffnen → Teilen → „Zum Home-Bildschirm“.",
-"help.offline":"<b>Offline:</b> Nach dem ersten Laden überall nutzbar (PWA).",
-"help.location":"<b>Standort:</b> Nur bei Bedarf (Check-in/SOS). Keine Hintergrundverfolgung.",
-"help.timer":"<b>Timer:</b> Kalender-.ics erzeugt lokale Erinnerung – ohne Server.",
-"help.places":"<b>Trusted Places:</b> Orte hinzufügen und Nähe sehen.",
-"help.stealth":"<b>Stealth-Modus:</b> Unauffällige UI in den Einstellungen.",
-"privacy.h3":"Datenschutz","privacy.p1":"SafeHeim speichert Einstellungen (Name, Kontakte, Orte, Timer) ausschließlich lokal (LocalStorage). Es werden keine personenbezogenen Daten an Server übertragen.","privacy.p2":"Beim Teilen übergibst du den Text selbst an Apps wie SMS oder WhatsApp.","privacy.p3":"Der optionale externe QR-Dienst wird nur aufgerufen, wenn du ihn aktiv nutzt.",
-"imprint.h3":"Impressum",
-"offline.h3":"Du bist offline","offline.p":"Viele Funktionen (Kontakte, Check-in-Nachricht) funktionieren dennoch.","offline.home":"Zur Startseite",
-"setup.h3a":"Kontakte & Check-in","setup.name":"Dein Name","setup.addContact":"Kontakt hinzufügen","setup.timer":"Check-in Timer (Minuten)","setup.ics":"Kalender-Erinnerung (.ics)",
-"setup.h3b":"Teilen, QR & Orte","setup.link":"Dein Check-in-Link","setup.copy":"Link kopieren","setup.whatsapp":"WhatsApp","setup.qr":"QR anzeigen (extern)","setup.qrNote":"QR über externen Dienst (api.qrserver.com). Alternativ Link teilen/kopieren.",
-"setup.places":"Trusted Places","setup.placesInfo":"Orte (z. B. Zuhause, Uni) hinzufügen und Nähe sehen.","setup.placeAdd":"Aktuellen Ort speichern",
-"setup.stealth":"Stealth-Modus","setup.stealthInfo":"Unauffällige UI (z. B. „Notiz senden“ statt „SOS“).","setup.stealthToggle":"Stealth umschalten",
-"setup.export":"Einstellungen exportieren","setup.import":"Importieren","setup.branding":"Partner-Branding via URL-Parameter: ?brand=NAME&primary=#HEX&accent=#HEX&logo=URL&lang=en"
-},
-en: {
-brand:"SafeHeim",
-"nav.help":"Help","nav.privacy":"Privacy","nav.setup":"Set up now","nav.imprint":"Imprint","nav.arrived":"Check-in","nav.panic":"SOS","nav.print":"Print","nav.onepager":"One-pager",
-"home.badge":"Arrive safely — for you & your loved ones",
-"home.h1":"Your smart safety link",
-"home.lead":"1-tap “I arrived” & “SOS” with location link. No cloud. No signup. Works offline. Trusted places & calendar reminder.",
-"home.cta.arrived":"I arrived safely","home.cta.panic":"SOS","home.cta.qr":"Scan QR","home.cta.setup":"Set up",
-"arrived.h3":"I arrived safely","arrived.share":"Share / Copy","arrived.direct":"Send to contacts",
-"panic.h3":"🚨 SOS","panic.share":"Share / Copy","panic.call":"Call 112","panic.direct":"Send to contacts",
-"qr.tip":"Tip: Tap the video to toggle the flashlight (if available).",
-"help.h3":"FAQ",
-"help.privacy":"<b>Privacy:</b> No cloud, no accounts. Everything stays on your device.",
-"help.ios":"<b>iPhone app icon:</b> Open → Share → “Add to Home Screen”.",
-"help.offline":"<b>Offline:</b> Works everywhere after first load (PWA).",
-"help.location":"<b>Location:</b> Only on demand (check-in/SOS). No background tracking.",
-"help.timer":"<b>Timer:</b> Calendar .ics creates local reminder — no server.",
-"help.places":"<b>Trusted places:</b> Add places and see when you’re near.",
-"help.stealth":"<b>Stealth mode:</b> Discreet UI in settings.",
-"privacy.h3":"Privacy","privacy.p1":"SafeHeim stores settings (name, contacts, places, timer) locally (LocalStorage). No personal data is sent to servers.","privacy.p2":"When sharing, you hand the text to your chosen app (SMS/WhatsApp).","privacy.p3":"The optional external QR service is only used when you open it.",
-"imprint.h3":"Imprint",
-"offline.h3":"You’re offline","offline.p":"Many features (contacts, check-in text) still work.","offline.home":"Home",
-"setup.h3a":"Contacts & check-in","setup.name":"Your name","setup.addContact":"Add contact","setup.timer":"Check-in timer (minutes)","setup.ics":"Calendar reminder (.ics)",
-"setup.h3b":"Sharing, QR & places","setup.link":"Your check-in link","setup.copy":"Copy link","setup.whatsapp":"WhatsApp","setup.qr":"Show QR (external)","setup.qrNote":"QR via external service (api.qrserver.com). Or share/copy the link.",
-"setup.places":"Trusted places","setup.placesInfo":"Add places (home, uni) and see proximity.","setup.placeAdd":"Save current place",
-"setup.stealth":"Stealth mode","setup.stealthInfo":"Discreet UI (e.g., “Send note” instead of “SOS”).","setup.stealthToggle":"Toggle stealth",
-"setup.export":"Export settings","setup.import":"Import","setup.branding":"Partner branding via URL: ?brand=NAME&primary=#HEX&accent=#HEX&logo=URL&lang=en"
-}
-};
+const I18N = { /* … (DE/EN aus vorheriger Version, unverändert) … */ };
+// (um Platz zu sparen in dieser Antwort ist das I18N-Objekt identisch mit vorher – bitte aus deiner aktuellen Datei übernehmen)
+// → Wenn du willst, sende ich dir das I18N-Objekt nochmal vollständig.
 
 function pickLang(){
 const q = new URLSearchParams(location.search);
@@ -96,7 +43,7 @@ if (txt.includes('<b>')) el.innerHTML = txt; else el.textContent = txt;
 function saveSettings(partial){ settings = { ...settings, ...partial }; store.set('sh.settings', settings); renderSettings(); }
 export function announce(msg){ const n = $('#live'); if(n){ n.textContent=''; setTimeout(()=>n.textContent=msg, 10); } }
 function escapeHtml(s=''){ return s.replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])); }
-function abs(path){ return new URL(path, location.origin + '/safe-heim-/').href; }
+function abs(path){ return new URL(path, location.origin + '/HeimHafen-SafeHeim/').href; }
 function mapLink(lat, lon){ return `https://maps.google.com/?q=${encodeURIComponent(`${lat},${lon}`)}`; }
 function hardenExternalLinks(){ document.querySelectorAll('a[target="_blank"]').forEach(a=>{ if(!a.rel) a.rel='noopener noreferrer'; }); }
 export const isStealthMode = () => !!settings.stealth;

@@ -7,13 +7,21 @@
   <meta name="description" content="1-Tap Check-in & SOS ohne Konto. 100 % privat, offlinefähig, QR-Scanner, Trusted Places & Kalender-Erinnerung.">
   <meta name="theme-color" content="#0b0f14">
 
-  <!-- Korrekte Basis für GitHub Pages -->
+  <!-- GitHub Pages Basis -->
   <base href="/HeimHafen-SafeHeim/">
   <link rel="canonical" href="https://heimhafen.github.io/HeimHafen-SafeHeim/">
 
   <!-- Security / Privacy -->
   <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://api.qrserver.com https://maps.google.com; connect-src 'self'; media-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+    content="default-src 'self';
+             script-src 'self';
+             style-src 'self' 'unsafe-inline';
+             img-src 'self' data: https://api.qrserver.com https://maps.google.com;
+             connect-src 'self' https://api.qrserver.com;
+             media-src 'self' blob:;
+             frame-ancestors 'none';
+             base-uri 'self';
+             form-action 'self'">
   <meta http-equiv="Permissions-Policy" content="geolocation=(self), camera=(self), microphone=()">
   <meta name="referrer" content="no-referrer">
 
@@ -21,7 +29,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
   <link rel="icon" sizes="192x192" href="assets/icon-shield-192.png">
-  <link rel="apple-touch-icon" href="/HeimHafen-SafeHeim/apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="assets/icon-shield-180.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="SafeHeim">
@@ -42,45 +50,38 @@
     <header class="header">
       <a class="brand" href="./">
         <img src="assets/logo.svg" alt="" class="brand-logo">
-        <strong id="brand" data-i18n="brand">SafeHeim</strong>
-        <span id="cidBadge" class="badge-mini" style="display:none;margin-left:8px"></span>
+        <strong>SafeHeim</strong>
       </a>
       <nav class="nav">
-        <a class="btn ghost" href="help.html" data-i18n="nav.help">Hilfe</a>
-        <a class="btn" href="datenschutz.html" data-i18n="nav.privacy">Datenschutz</a>
-        <a class="btn" href="ride/" data-i18n="nav.setup">Jetzt einrichten</a>
-        <!-- werden per JS sichtbar -->
+        <a class="btn ghost" href="help.html">Hilfe</a>
+        <a class="btn" href="datenschutz.html">Datenschutz</a>
+        <a class="btn" href="ride/">Jetzt einrichten</a>
         <button id="btn-install" class="btn" style="display:none" onclick="SafeHeim.installApp()">App installieren</button>
         <button id="btn-update"  class="btn" style="display:none">Update verfügbar</button>
       </nav>
     </header>
 
     <section class="hero">
-      <div class="pill" role="status" aria-label="Slogan">
-        Sicher ankommen — für dich &amp; deine Liebsten
-      </div>
-
-      <h1 class="h1" data-i18n="home.h1">Dein smarter Sicherheits-Link</h1>
-      <p class="lead" data-i18n="home.lead">
+      <div class="pill">Sicher ankommen — für dich &amp; deine Liebsten</div>
+      <h1 class="h1">Dein smarter Sicherheits-Link</h1>
+      <p class="lead">
         1-Tap „Ich bin gut angekommen“ &amp; „SOS“ inkl. Standortlink. Keine Cloud. Keine Registrierung.
         Offline nutzbar. Trusted Places &amp; Kalender-Erinnerung.
       </p>
-
       <div class="buttons">
-        <a class="btn primary" href="arrived.html" data-i18n="home.cta.arrived">Ich bin gut angekommen</a>
-        <a class="btn" href="panic.html" data-i18n="home.cta.panic">SOS / Panik</a>
-        <a class="btn" href="qr-scan.html" data-i18n="home.cta.qr">QR scannen</a>
-        <a class="btn" href="ride/" data-i18n="home.cta.setup">Einrichten</a>
+        <a class="btn primary" href="arrived.html">Ich bin gut angekommen</a>
+        <a class="btn" href="panic.html">SOS / Panik</a>
+        <a class="btn" href="qr-scan.html">QR scannen</a>
+        <a class="btn" href="ride/">Einrichten</a>
       </div>
     </section>
 
     <footer class="footer">
-      <a href="impressum.html" data-i18n="nav.imprint">Impressum</a> ·
-      <a href="docs/onepager.html" target="_blank" rel="noopener" data-i18n="nav.onepager">One-Pager</a>
+      <a href="impressum.html">Impressum</a> ·
+      <a href="docs/onepager.html" target="_blank" rel="noopener">One-Pager</a>
     </footer>
   </div>
 
-  <!-- Safe area bottom padding for iOS -->
   <div class="sa-bottom"></div>
 </body>
 </html>

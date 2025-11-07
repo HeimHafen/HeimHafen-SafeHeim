@@ -1,68 +1,7 @@
-<!doctype html>
-<html lang="de">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SafeHeim — One-Pager</title>
-<base href="/HeimHafen-SafeHeim/">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'">
-<link rel="stylesheet" href="../assets/app.css">
-<style>
-.wrap{background:#fff;color:#111;padding:28px;border-radius:12px}
-.wrap h1{color:#000}
-.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0}
-.kpis .card{background:#fafafa;border:1px solid #eee;color:#111}
-@media print{ .no-print{display:none} body{background:#fff} .container{max-width:900px} }
-</style>
-</head>
-<body>
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>One-Pager</title><link rel="stylesheet" href="../assets/app.css">
 <div class="container">
-<div class="no-print" style="display:flex;justify-content:space-between;align-items:center;margin:8px 0">
-<a class="brand" href="../"><img src="../assets/logo.svg" alt=""><strong>SafeHeim</strong></a>
-<div class="buttons"><button class="btn" onclick="window.print()">Drucken</button></div>
+  <h1>One-Pager</h1>
+  <p>Produktübersicht folgt.</p>
+  <p><a href="../">Zurück</a></p>
 </div>
-<div class="wrap">
-<h1>SafeHeim — Sicher ankommen in <span id="city">unserer Stadt</span></h1>
-<p><b>Was ist SafeHeim?</b> Eine ultraschlanke Web-App für 1-Tap-Check-ins („Ich bin gut angekommen“) und SOS-Hinweise — ohne Konto, ohne Cloud, 100 % privat & DSGVO-freundlich.</p>
-
-<div class="kpis">
-<div class="card"><h3>0 € Infrastruktur</h3><p>Keine Server nötig. Läuft als Progressive Web App (PWA) direkt im Browser.</p></div>
-<div class="card"><h3>30 Sek. Onboarding</h3><p>Link öffnen → „Zum Home-Bildschirm“ → fertig. iOS & Android.</p></div>
-<div class="card"><h3>Privacy-by-Design</h3><p>Keine Registrierung, Daten bleiben lokal. Teilen nur an Vertrauenspersonen.</p></div>
-</div>
-
-<h3>Warum für die Stadt?</h3>
-<ul class="list">
-<li>Spürbarer Sicherheitsgewinn für Heimwege, Schulwege, Freizeit.</li>
-<li>Keine Datenhaltung durch die Kommune, minimales Risiko.</li>
-<li>Einfaches City-Branding (Farben/Logo/Name per URL-Parameter).</li>
-<li>Multiplikatoren: Schulen, Vereine, Taxi/ÖPNV, Gastronomie.</li>
-</ul>
-
-<h3>Geplanter Pilottest (6 Wochen)</h3>
-<ol class="list">
-<li>Partner gewinnen (Schulen, Uni, Jugend, Taxi, Clubs).</li>
-<li>Kommunikation: Sticker/Poster (QR), Social Posts, Website.</li>
-<li>Begleitende Evaluation: Nutzung, Feedback, Verbesserung.</li>
-</ol>
-
-<h3>Datenschutz kompakt</h3>
-<p>Kein Konto, keine Cloud. Einstellungen lokal (LocalStorage). Standort wird nur auf Wunsch abgefragt. Inhalte werden nur durch Nutzer*innen selbst geteilt (SMS/WhatsApp).</p>
-
-<h3>Call to Action</h3>
-<p><b>Vorschlag:</b> Start als städtische Aktion „Sicher Heim“ zum <span id="date">N.N.</span>. Bereitstellung der QR-Poster/Sticker für Institutionen. Presseankündigung & Social Media. Ansprechpartner*in: <span id="contact">N.N.</span>.</p>
-
-<div class="buttons no-print" style="margin-top:10px">
-<a class="btn" href="../print/" target="_blank" rel="noopener">Poster/Sticker öffnen</a>
-<a class="btn" href="../" target="_blank" rel="noopener">App öffnen</a>
-</div>
-</div>
-</div>
-<script>
-const q = new URLSearchParams(location.search);
-if(q.get('city')) document.getElementById('city').textContent = q.get('city');
-if(q.get('date')) document.getElementById('date').textContent = q.get('date');
-if(q.get('contact'))document.getElementById('contact').textContent = q.get('contact');
-</script>
-</body>
-</html>

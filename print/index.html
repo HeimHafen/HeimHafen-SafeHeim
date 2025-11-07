@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Drucken — SafeHeim</title>
-<base href="/safe-heim-/">
+<base href="/HeimHafen-SafeHeim/">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https://api.qrserver.com; style-src 'self' 'unsafe-inline'">
 <link rel="stylesheet" href="../assets/app.css">
 <style>
@@ -46,7 +46,7 @@
 </div>
 
 <script>
-function abs(p){ return new URL(p, location.origin + '/safe-heim-/').href; }
+function abs(p){ return new URL(p, location.origin + '/HeimHafen-SafeHeim/').href; }
 const link = abs('arrived.html');
 const src = 'https://api.qrserver.com/v1/create-qr-code/?size=360x360&data=' + encodeURIComponent(link);
 document.getElementById('qrPoster').src = src;

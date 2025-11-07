@@ -1,4 +1,3 @@
-/* ========== Base / Theme ========== */
 :root{
   --bg:#0b0f14; --fg:#e5f0ff; --muted:#8aa1b2;
   --card:#0f1722; --stroke:#223242;
@@ -6,7 +5,6 @@
   --primary-a:#22d3ee; --primary-b:#3b82f6;
   --danger:#ef4444;
 }
-
 *{box-sizing:border-box}
 html,body{height:100%}
 html,body{background:var(--bg);color:var(--fg);margin:0;font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,system-ui}
@@ -15,18 +13,17 @@ a{color:#7cc0ff;text-decoration:none}
 a:hover{text-decoration:underline}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-/* Safe areas */
 .sa-bottom{height:env(safe-area-inset-bottom)}
 .container{max-width:980px;margin:0 auto;padding:calc(12px + env(safe-area-inset-top)) 16px 24px}
 
-/* ========== Header ========== */
+/* Header */
 .header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
 .brand{display:flex;align-items:center;gap:10px;color:var(--fg);text-decoration:none}
 .brand-logo{width:26px;height:26px;opacity:.9}
 .brand strong{font-weight:800;font-size:20px;letter-spacing:.2px}
 .nav{display:flex;flex-wrap:wrap;gap:10px}
 
-/* ========== Buttons ========== */
+/* Buttons */
 .buttons{display:flex;flex-wrap:wrap;gap:10px}
 .btn{appearance:none;cursor:pointer;border:1px solid var(--stroke);
      background:var(--btn);color:var(--btn-fg);
@@ -36,11 +33,10 @@ a:hover{text-decoration:underline}
 .btn.primary{background:linear-gradient(90deg,var(--primary-a),var(--primary-b));border:none;color:#05202a;font-weight:700}
 .btn.danger{background:var(--danger);border:none;color:#fff}
 
-/* ========== Hero ========== */
+/* Hero */
 .hero{padding:8px 0 14px}
 .h1{font-size:40px;line-height:1.1;margin:14px 0 8px;font-weight:800}
-.lead{color:var(--fg);opacity:.88;margin:0 0 16px}
-
+.lead{opacity:.88;margin:0 0 16px}
 .pill{
   display:inline-flex;align-items:center;justify-content:center;text-align:center;
   min-height:52px;padding:10px 16px;border-radius:999px;
@@ -48,17 +44,12 @@ a:hover{text-decoration:underline}
   color:#05202a;font-weight:800;letter-spacing:.2px
 }
 
-.badge-mini{display:inline-block;font-size:12px;background:#0e1b26;border:1px solid var(--stroke);
-  padding:2px 6px;border-radius:10px;color:var(--muted)}
-
-/* ========== Footer ========== */
+/* Footer & pages */
 .footer{margin-top:28px;color:var(--muted);font-size:15px}
-
-/* ========== Pages (interior) ========== */
-.page{max-width:720px;margin:24px auto;padding:0 4px}
+.page{max-width:720px;margin:24px auto;padding:0 16px}
 .page h1{font-size:40px;margin:0 0 8px}
 .page p{margin:0 0 12px}
 .muted{color:var(--muted)}
 
-/* Hide install/update by default (JS blendet ein) */
+/* Hidden install/update (JS blendet ein) */
 #btn-install,#btn-update{display:none}

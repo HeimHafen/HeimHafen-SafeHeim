@@ -1,11 +1,23 @@
-<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>QR scannen</title><link rel="stylesheet" href="./assets/app.css">
-<div class="container">
-  <h1>QR scannen</h1>
-  <p>Kamera-Zugriff ist erforderlich. Auf älteren Geräten kannst du unten ein Bild hochladen.</p>
-  <video id="v" playsinline autoplay style="width:100%;max-width:480px;border-radius:12px;border:1px solid #333"></video>
-  <p><input id="file" type="file" accept="image/*"></p>
-  <p id="out"></p>
-  <p><a href="./">Zurück</a></p>
-</div>
-<script src="./assets/qr.js"></script>
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>QR scannen – SafeHeim</title>
+  <meta name="theme-color" content="#0b0f14">
+  <base href="/HeimHafen-SafeHeim/">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="assets/app.css">
+  <script defer src="assets/app.js"></script>
+</head>
+<body>
+  <main class="page">
+    <h1>QR scannen</h1>
+    <p>Foto aufnehmen oder Bild auswählen – der Inhalt wird erkannt.</p>
+    <p><input id="qrupload" type="file" accept="image/*" capture="environment"></p>
+    <p id="qrout" class="muted"></p>
+    <p><a href="./">Zurück</a></p>
+    <p class="muted">Hinweis: Funktioniert offline eingeschränkt (kein Server-Decode möglich).</p>
+  </main>
+</body>
+</html>

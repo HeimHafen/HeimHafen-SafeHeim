@@ -14,7 +14,7 @@
   <div id="live" class="sr-only" aria-live="polite"></div>
   <main class="page">
     <h1>🚨 SOS</h1>
-    <p>Bleib ruhig. Wenn möglich, **rufe sofort <a href="tel:112">112</a> an**.</p>
+    <p>Bleib ruhig. Wenn möglich, <strong>rufe sofort <a href="tel:112">112</a> an</strong>.</p>
     <div class="buttons">
       <a class="btn danger" href="tel:112">112 anrufen</a>
       <button class="btn primary" onclick="SafeHeim.shareSituation('sos')">Standort teilen</button>
@@ -22,6 +22,14 @@
       <a class="btn" href="./">Zurück</a>
     </div>
     <p class="muted" style="margin-top:12px">SafeHeim ersetzt nicht den Notruf 112.</p>
+    <div id="fallback" style="display:none;margin-top:16px">
+      <div class="buttons">
+        <a id="fallback-whatsapp" class="btn" href="#" target="_blank" rel="noopener">WhatsApp</a>
+        <a id="fallback-sms" class="btn" href="#">Nachricht (SMS)</a>
+        <a id="fallback-mail" class="btn" href="#">E-Mail</a>
+        <button id="fallback-copy" class="btn">Link kopieren</button>
+      </div>
+    </div>
   </main>
 </body>
 </html>

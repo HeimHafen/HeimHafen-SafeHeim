@@ -1,22 +1,24 @@
 {
-"id": "./",
-"name": "SafeHeim / SafeFahrt",
-"short_name": "SafeHeim",
-"lang": "de",
-"dir": "ltr",
-"start_url": "./index.html?source=pwa",
-"scope": "./",
-"display": "standalone",
-"background_color": "#0b0f14",
-"theme_color": "#0b0f14",
-"icons": [
-{ "src": "./assets/icon-shield-192.png", "sizes": "192x192", "type": "image/png" },
-{ "src": "./assets/icon-shield-512.png", "sizes": "512x512", "type": "image/png" }
-],
-"shortcuts": [
-{ "name": "Check-in", "url": "./arrived.html" },
-{ "name": "SOS / Panik", "url": "./panic.html" },
-{ "name": "QR scannen", "url": "./qr-scan.html" },
-{ "name": "Einrichten", "url": "./ride/" }
-]
+  "id": "./",
+  "name": "SafeHeim / SafeFahrt",
+  "short_name": "SafeHeim",
+  "lang": "de",
+  "dir": "ltr",
+  "start_url": "./index.html?source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b0f14",
+  "theme_color": "#0b0f14",
+  "categories": ["social", "navigation", "health"],
+  "icons": [
+    { "src": "./assets/icon-shield-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./assets/icon-shield-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Check-in",  "url": "./arrived.html" },
+    { "name": "SOS / Panik", "url": "./panic.html" },
+    { "name": "QR scannen", "url": "./qr-scan.html" },
+    { "name": "Einrichten", "url": "./ride/" }
+  ]
 }
